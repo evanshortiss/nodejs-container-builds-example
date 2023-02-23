@@ -1,0 +1,26 @@
+FROM registry.access.redhat.com/ubi8/nodejs-16-minimal
+
+# Create app directory
+WORKDIR /usr/src/app
+
+# Install app dependencies
+# A wildcard is used to ensure both package.json AND package-lock.json are copied
+# where available (npm@5+)
+COPY --chown=1001:1001 package*.json ./
+
+# If you are building your code for production
+RUN npm ci
+
+# Bundle app source
+COPY --chown=1001:1001 . .
+
+# Build the source into JS files
+RUN npm run build:ts
+
+# Configure fastify port and host defaults
+ENV FASTIFY_PORT 8080
+ENV FASTIFY_ADDRESS 0.0.0.0
+
+EXPOSE 8080
+
+CMD [ "./node_modules/.bin/fastify", "start", "-l", "info", "dist/app.js" ]
