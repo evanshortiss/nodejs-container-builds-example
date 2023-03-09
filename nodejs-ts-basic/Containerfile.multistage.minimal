@@ -1,5 +1,5 @@
 # First stage of the build is to install dependencies, and build from source
-FROM registry.access.redhat.com/ubi8/nodejs-16 as build
+FROM registry.access.redhat.com/ubi8/nodejs-18 as build
 
 WORKDIR /usr/src/app
 COPY --chown=1001:1001 package*.json ./
@@ -8,20 +8,14 @@ COPY --chown=1001:1001 tsconfig*.json ./
 COPY --chown=1001:1001 src src
 RUN npm run build:ts
 
-# Make a cached, lightweight copy of node_modules sans devDependencies
-FROM registry.access.redhat.com/ubi8/nodejs-16 as deps
-WORKDIR /usr/src/app
-COPY --chown=1001:1001 package*.json ./
-RUN npm ci --omit=dev
-
-# Final stage of the build is to create a minimal container with just enough
+# Second stage of the build is to create a minimal container with just enough
 # required to run the application, i.e production deps and compiled js files
-FROM registry.access.redhat.com/ubi8/nodejs-16-minimal
-
+FROM registry.access.redhat.com/ubi8/nodejs-18-minimal
 WORKDIR /usr/src/app
+
+COPY --chown=1001:1001 --from=build /usr/src/app/package*.json/ .
+RUN npm ci --omit=dev
 COPY --chown=1001:1001 --from=build /usr/src/app/dist/ dist/
-COPY --chown=1001:1001 --from=deps /usr/src/app/package*.json/ .
-COPY --chown=1001:1001 --from=deps /usr/src/app/node_modules/ node_modules/
 
 ENV FASTIFY_PORT 8080
 ENV FASTIFY_ADDRESS 0.0.0.0

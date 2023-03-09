@@ -1,5 +1,4 @@
 Containerfile
 README.md
-.taprc
-dist
+test
 node_modules

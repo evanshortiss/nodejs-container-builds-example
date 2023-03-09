@@ -1,0 +1,6 @@
+Containerfile*
+README.md
+.taprc
+dist
+node_modules
+test
