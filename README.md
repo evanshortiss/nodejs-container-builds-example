@@ -12,3 +12,21 @@ cd nodejs-image-sizes
 
 ./build.sh
 ```
+
+## Viewing Container Image Sizes
+
+Use the Podman/Docker images command:
+
+```
+podman images --format '{{.Size}} {{.Repository}} {{.Tag}}' | grep nodejs
+
+661 MB localhost/nodejs-basic latest
+211 MB localhost/nodejs-ts-basic-multistage-minimal latest
+661 MB localhost/nodejs-ts-basic-multistage latest
+832 MB localhost/nodejs-ts-basic-prune latest
+831 MB localhost/nodejs-ts-basic latest
+643 MB registry.access.redhat.com/ubi8/nodejs-18 latest
+194 MB registry.access.redhat.com/ubi8/nodejs-18-minimal latest
+```
+
+Note that the *multistage-minimal* image is the smallest.
