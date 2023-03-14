@@ -1,6 +1,9 @@
 Containerfile*
 README.md
-.taprc
 dist
 node_modules
 test
+*.log
+.dockerignore
+.taprc
+.npmrc
