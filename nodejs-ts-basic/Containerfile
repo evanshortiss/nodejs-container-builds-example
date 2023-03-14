@@ -1,7 +1,7 @@
 FROM registry.access.redhat.com/ubi8/nodejs-18
 
 WORKDIR /usr/src/app
-
+USER 1001
 COPY --chown=1001:1001 package*.json ./
 
 RUN npm ci
@@ -12,9 +12,11 @@ COPY --chown=1001:1001 . .
 # Build the source into JS files
 RUN npm run build:ts
 
-# Configure fastify port and host defaults
+# Configure fastify behaviour, and NODE_ENV
+ENV NODE_ENV=production
 ENV FASTIFY_PORT 8080
 ENV FASTIFY_ADDRESS 0.0.0.0
+ENV FASTIFY_CLOSE_GRACE_DELAY=5000
 
 # Note that the container exposes services on 8080
 EXPOSE 8080
