@@ -4,6 +4,7 @@ dist
 node_modules
 test
 *.log
+.env*
 .dockerignore
 .taprc
 .npmrc
