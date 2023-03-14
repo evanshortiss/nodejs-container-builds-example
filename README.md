@@ -36,7 +36,7 @@ Note that the *multistage-minimal* image is the smallest.
 This repository implements most of these tips for building better container images for Node.js applications:
 
 1. Don’t run as root. Using OpenShift / Red Hat UBI takes care of this for you.
-Use multi-stage builds to keep your containers lightweight.
+1. Use multi-stage builds to keep your containers lightweight.
 1. Gracefully handle process signals to avoid abrupt interruptions to requests.
 1. Avoid npm start, and consider using an init system such as tini.
 1. Install necessary libraries and dependencies only.
