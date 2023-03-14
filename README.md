@@ -30,3 +30,16 @@ podman images --format '{{.Size}} {{.Repository}} {{.Tag}}' | grep nodejs
 ```
 
 Note that the *multistage-minimal* image is the smallest.
+
+## General Tips
+
+This repository implements most of these tips for building better container images for Node.js applications:
+
+1. Don’t run as root. Using OpenShift / Red Hat UBI takes care of this for you.
+Use multi-stage builds to keep your containers lightweight.
+1. Gracefully handle process signals to avoid abrupt interruptions to requests.
+1. Avoid npm start, and consider using an init system such as tini.
+1. Install necessary libraries and dependencies only.
+1. Use a .dockerignore to avoid copying sensitive and unwanted files into container images.
+1. Use a minimal/slim image for deployment, e.g the `minimal` variants of Red Hat's UBI images.
+1. Use the Podman/Docker secrets feature to include potentially sensitive files at build-time, e.g a *.npmrc* file.
