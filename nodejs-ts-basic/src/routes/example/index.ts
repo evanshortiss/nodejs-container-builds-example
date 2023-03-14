@@ -1,8 +1,13 @@
 import { FastifyPluginAsync } from "fastify"
 
 const example: FastifyPluginAsync = async (fastify, opts): Promise<void> => {
-  fastify.get('/', async function (request, reply) {
-    return 'this is an example'
+  fastify.get('/', () => 'this is an example')
+
+  fastify.get('/slow', (request, reply) => {
+    // Simulate a slow endpoint
+    setTimeout(() => {
+      reply.send('finally!')
+    }, 2000)
   })
 }
 

@@ -7,16 +7,20 @@ In the project directory, you can run:
 
 ### `npm run dev`
 
-To start the app in dev mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+To start the app in dev mode. Open [http://localhost:3000](http://localhost:3000)
+to view it in the browser.
 
 ### `npm start`
 
-For production mode
+For production mode.
 
 ### `npm run test`
 
 Run the test cases.
+
+## Endpoints
+
+Swagger UI is exposed at the http://localhost:3000/documentation when `NODE_ENV` is set to `development` (default behaviour).
 
 ## Learn More
 
