@@ -27,4 +27,5 @@ ENV FASTIFY_ADDRESS 0.0.0.0
 ENV FASTIFY_CLOSE_GRACE_DELAY=5000
 EXPOSE 8080
 
-CMD [ "./node_modules/.bin/fastify", "start", "-l", "info", "dist/app.js" ]
+ENTRYPOINT [ "./node_modules/.bin/fastify" ]
+CMD [ "start", "-l", "info", "dist/app.js" ]

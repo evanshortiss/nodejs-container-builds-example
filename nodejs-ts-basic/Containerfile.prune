@@ -4,12 +4,12 @@ WORKDIR /usr/src/app
 
 USER 1001
 
-COPY --chown=1001:1001 package*.json ./
+COPY --chown=1001:0 package*.json ./
 
 RUN npm ci
 
 # Copy app source into the container
-COPY --chown=1001:1001 . .
+COPY --chown=1001:0 . .
 
 # Build the source into JS files
 RUN npm run build:ts
@@ -26,4 +26,5 @@ ENV FASTIFY_CLOSE_GRACE_DELAY=5000
 # Note that the container exposes services on 8080
 EXPOSE 8080
 
-CMD [ "./node_modules/.bin/fastify", "start", "-l", "info", "dist/app.js" ]
+ENTRYPOINT [ "./node_modules/.bin/fastify" ]
+CMD [ "start", "-l", "info", "dist/app.js" ]
